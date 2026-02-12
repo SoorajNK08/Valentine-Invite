@@ -11,15 +11,29 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             background-color: #fff0f5;
             font-family: sans-serif;
-            overflow: hidden; /* This acts as a physical barrier */
+            overflow: hidden; /* Prevents scrollbars if button hits the edge */
         }
-        h1 { color: #d63384; margin-bottom: 50px; z-index: 1; }
-        .btn-group { display: flex; gap: 50px; z-index: 1; }
+        
+        /* The Header: Locked at the top layer */
+        h1 { 
+            color: #d63384; 
+            margin-top: 80px; 
+            position: relative;
+            z-index: 100; /* Higher number = top layer */
+            text-align: center;
+            pointer-events: none; /* Mouse passes through text to buttons behind it */
+        }
+
+        .btn-group { 
+            margin-top: 50px;
+            display: flex; 
+            gap: 40px; 
+        }
+
         button { 
-            padding: 15px 30px; 
+            padding: 15px 35px; 
             font-size: 1.5rem; 
             font-weight: bold; 
             border-radius: 50px; 
@@ -27,17 +41,21 @@
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        #yesBtn { background-color: #ff4d6d; color: white; }
+
+        #yesBtn { background-color: #ff4d6d; color: white; position: relative; z-index: 1; }
+        
         #noBtn { 
             background-color: #6c757d; 
             color: white; 
-            transition: 0.3s ease;
-            position: absolute; /* Allows independent travel */
+            transition: 0.3s ease-out;
+            position: absolute; 
+            z-index: 1;
         }
     </style>
 </head>
 <body>
     <h1>Will you be my Valentine? ❤️</h1>
+    
     <div class="btn-group">
         <button id="yesBtn" onclick="celebrate()">Yes!</button>
         <button id="noBtn" onmouseover="dodge()">No</button>
@@ -47,22 +65,31 @@
         function dodge() {
             const btn = document.getElementById('noBtn');
             
-            // Define the workspace limits (Subtracting button size + safety margin)
-            const maxX = window.innerWidth - 150; 
-            const maxY = window.innerHeight - 100;
+            // BOUNDARY SETTINGS
+            const headerClearance = 200; // Pixels from top that are "OFF LIMITS"
+            const edgeBuffer = 50;       // Safety margin from the screen edges
 
-            // Simple coordinate generation (always positive)
-            const x = Math.floor(Math.random() * maxX);
-            const y = Math.floor(Math.random() * maxY);
+            // Calculate allowable workspace
+            const maxX = window.innerWidth - btn.offsetWidth - edgeBuffer;
+            const maxY = window.innerHeight - btn.offsetHeight - edgeBuffer;
 
-            // Directly override the position
+            // Generate coordinates
+            const x = Math.max(edgeBuffer, Math.floor(Math.random() * maxX));
+            // Force Y to always be below the header zone
+            const y = Math.max(headerClearance, Math.floor(Math.random() * maxY));
+
+            // Apply new position
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
 
         function celebrate() {
-            alert('Yay! I knew you would say YES! ❤️');
-            document.body.innerHTML = '<div style="text-align:center;"><h1>❤️ I LOVE YOU! ❤️</h1></div>';
+            // Clears the screen for the final romantic message
+            document.body.innerHTML = `
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; background-color: #ff4d6d; color: white; text-align: center;">
+                    <h1 style="font-size: 5rem; color: white;">❤️ I LOVE YOU! ❤️</h1>
+                    <p style="font-size: 2rem;">I knew you'd say Yes!</p>
+                </div>`;
         }
     </script>
 </body>
