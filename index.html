@@ -2,35 +2,60 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Valentine</title>
+<title>My Valentine ❤️</title>
 
 <style>
 body{
-    background:#ffc0cb;
-    font-family: Arial;
+    background:linear-gradient(#ff9a9e,#fad0c4);
+    font-family: Arial, sans-serif;
     text-align:center;
     padding-top:80px;
+    overflow:hidden;
 }
 
 h1{
+    color:#b30047;
     padding:20px;
-}
-
-button{
-    padding:15px 30px;
-    font-size:18px;
-    margin:10px;
-}
-
-#noBtn{
-    position:absolute;
 }
 
 #container{
     position:relative;
-    height:300px;
+    height:250px;
+}
+
+button{
+    padding:16px 38px;
+    font-size:20px;
+    border:none;
+    border-radius:40px;
+    cursor:pointer;
+    transition:0.3s ease;
+}
+
+/* YES button */
+#yesBtn{
+    background:#ff3366;
+    color:white;
+    box-shadow:0 6px 15px rgba(0,0,0,0.2);
+}
+
+#yesBtn:hover{
+    transform:scale(1.1);
+}
+
+/* NO button */
+#noBtn{
+    background:#555;
+    color:white;
+    position:absolute;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+#noBtn:hover{
+    background:#000;
 }
 </style>
+
 </head>
 
 <body>
@@ -38,7 +63,7 @@ button{
 <h1 id="question">Will you be my Valentine? ❤️</h1>
 
 <div id="container">
-<button onclick="yesClicked()">Yes ❤️</button>
+<button id="yesBtn" onclick="yesClicked()">Yes ❤️</button>
 <button id="noBtn" onmouseover="moveNo()">No 😢</button>
 </div>
 
@@ -52,9 +77,9 @@ const questions = [
 "After every challenge we’ve faced side by side…",
 "After every small and big memory we created…",
 "After choosing each other every single day…",
-"You still want to press NO? 🥺",
-"I’d still choose you. Every time.",
-"So tell me… will you be my Valentine today and always? ❤️"
+"And still trying to press NO? 😏",
+"I’d still choose you. Every time. ❤️",
+"So tell me… will you be my Valentine today and always? 💍"
 ];
 
 function moveNo(){
@@ -63,18 +88,19 @@ function moveNo(){
     btn.style.left = Math.random()*300 + "px";
     btn.style.top = Math.random()*200 + "px";
 
-    round++;
-    if(round < questions.length){
+    if(round < questions.length - 1){
+        round++;
         document.getElementById("question").innerText = questions[round];
     }
 }
 
 function yesClicked(){
+    document.body.style.background="#ffb6c1";
     document.body.innerHTML = `
-    <h1>Yesss 😍</h1>
-    <h2>You just made me the luckiest husband alive ❤️</h2>
-    <p>I’d choose you in every lifetime.</p>
-    <p>Happy Valentine’s Day, my love 💕</p>
+        <h1>Yesss 😍</h1>
+        <h2>You just made me the luckiest husband alive ❤️</h2>
+        <p>I’d choose you in every lifetime.</p>
+        <p>Happy Valentine’s Day, my love 💕</p>
     `;
 }
 
