@@ -6,95 +6,93 @@
 
 <style>
 body{
-    margin:0;
-    height:100vh;
-    background:radial-gradient(circle at top,#ff6a88,#ff99ac,#ffd1dc);
-    font-family: 'Segoe UI', sans-serif;
-    text-align:center;
-    overflow:hidden;
+margin:0;
+height:100vh;
+font-family:'Segoe UI',sans-serif;
+text-align:center;
+overflow:hidden;
+background:linear-gradient(-45deg,#ff5f9e,#ff9a9e,#fad0c4,#ffd1dc);
+background-size:400% 400%;
+animation:bg 12s ease infinite;
 }
 
-.overlay{
-    position:absolute;
-    inset:0;
-    background:url('https://i.imgur.com/2JgY2wH.png');
-    opacity:0.25;
+@keyframes bg{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
 }
 
 .container{
-    position:relative;
-    z-index:2;
-    top:20%;
+position:relative;
+top:25%;
+color:white;
 }
 
 h1{
-    color:white;
-    padding:20px;
-    text-shadow:0 2px 10px rgba(0,0,0,0.3);
+padding:20px;
+text-shadow:0 2px 10px rgba(0,0,0,.3);
 }
 
 #box{
-    position:relative;
-    height:250px;
+position:relative;
+height:240px;
 }
 
 button{
-    padding:18px 44px;
-    font-size:22px;
-    border:none;
-    border-radius:50px;
-    cursor:pointer;
-    backdrop-filter:blur(6px);
+padding:18px 45px;
+font-size:22px;
+border:none;
+border-radius:50px;
+cursor:pointer;
 }
 
 /* YES */
 #yesBtn{
-    background:linear-gradient(135deg,#ff2d55,#ff7a9e);
-    color:white;
-    box-shadow:0 0 25px rgba(255,45,85,0.6);
-    animation:pulse 1.5s infinite;
+background:linear-gradient(135deg,#ff2d55,#ff7a9e);
+color:white;
+box-shadow:0 0 25px rgba(255,45,85,.6);
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.1)}
+100%{transform:scale(1)}
 }
 
 /* NO */
 #noBtn{
-    position:absolute;
-    background:rgba(255,255,255,0.25);
-    color:white;
-    box-shadow:0 0 10px rgba(0,0,0,0.2);
+position:absolute;
+background:rgba(255,255,255,.25);
+color:white;
+backdrop-filter:blur(6px);
 }
 
-@keyframes pulse{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.08);}
-    100%{transform:scale(1);}
-}
-
-/* Floating hearts */
+/* hearts */
 .heart{
-    position:fixed;
-    bottom:-20px;
-    color:white;
-    animation:float 6s linear infinite;
+position:fixed;
+bottom:-20px;
+animation:float 6s linear infinite;
 }
 
 @keyframes float{
-    from{transform:translateY(0);opacity:1;}
-    to{transform:translateY(-100vh);opacity:0;}
+from{transform:translateY(0);opacity:1}
+to{transform:translateY(-100vh);opacity:0}
 }
 </style>
 </head>
 
 <body>
 
-<div class="overlay"></div>
-
 <div class="container">
+
 <h1 id="question">Will you be my Valentine? ❤️</h1>
 
 <div id="box">
 <button id="yesBtn" onclick="yesClicked()">Yes ❤️</button>
 <button id="noBtn" onmouseover="moveNo()">No 😢</button>
 </div>
+
 </div>
 
 <script>
@@ -105,47 +103,4 @@ const questions=[
 "Will you be my Valentine? ❤️",
 "After everything we’ve built together…",
 "After every challenge we’ve faced side by side…",
-"After every small and big memory we created…",
-"After choosing each other every single day…",
-"And still trying to press NO? 😏",
-"I’d still choose you. Every time. ❤️",
-"So tell me… will you be my Valentine today and always? 💍"
-];
-
-function moveNo(){
- let btn=document.getElementById("noBtn");
- btn.style.left=Math.random()*250+"px";
- btn.style.top=Math.random()*180+"px";
-
- if(round<questions.length-1){
- round++;
- document.getElementById("question").innerText=questions[round];
- }
-}
-
-function yesClicked(){
- document.body.innerHTML=`
- <div style="color:white;margin-top:30%">
- <h1>Yesss 😍</h1>
- <h2>You just made me the luckiest husband alive ❤️</h2>
- <p>I’d choose you in every lifetime.</p>
- <p>Happy Valentine’s Day, my love 💕</p>
- </div>
- `;
-}
-
-/* hearts */
-setInterval(()=>{
- let h=document.createElement("div");
- h.className="heart";
- h.innerHTML="❤️";
- h.style.left=Math.random()*100+"vw";
- h.style.fontSize=20+Math.random()*20+"px";
- document.body.appendChild(h);
- setTimeout(()=>h.remove(),6000);
-},500);
-
-</script>
-
-</body>
-</html>
+"After every small and big m
