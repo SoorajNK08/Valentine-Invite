@@ -7,8 +7,8 @@
         h1 { color: #d63384; font-size: 2.5rem; text-align: center; margin-bottom: 30px; }
         .container { position: relative; width: 100%; height: 400px; display: flex; justify-content: center; align-items: center; }
         button { padding: 15px 40px; font-size: 1.5rem; border-radius: 50px; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        #yesBtn { background-color: #ff4d6d; color: white; margin-right: 150px; } /* Moves Yes to the left */
-        #noBtn { background-color: #6c757d; color: white; position: absolute; transition: 0.5s ease; margin-left: 150px; } /* Moves No to the right */
+        #yesBtn { background-color: #ff4d6d; color: white; margin-right: 150px; }
+        #noBtn { background-color: #6c757d; color: white; position: absolute; transition: 0.4s ease-out; margin-left: 150px; z-index: 5; }
     </style>
 </head>
 <body>
@@ -21,12 +21,19 @@
     <script>
         function dodge() {
             const btn = document.getElementById('noBtn');
-            // Calculate new coordinates like a 2D plot
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            const buffer = 50; // Safety margin from screen edge
+
+            // Calculate max allowable travel (X and Y axes)
+            const maxWidth = window.innerWidth - btn.offsetWidth - buffer;
+            const maxHeight = window.innerHeight - btn.offsetHeight - buffer;
+
+            // Generate coordinates within the "Safe Zone"
+            const x = Math.max(buffer, Math.floor(Math.random() * maxWidth));
+            const y = Math.max(buffer, Math.floor(Math.random() * maxHeight));
+
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
-            btn.style.margin = '0'; // Removes the initial offset once it starts moving
+            btn.style.margin = '0'; // Kill initial offset
         }
 
         function celebrate() {
