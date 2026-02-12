@@ -4,78 +4,65 @@
     <title>Will You Be Mine? ❤️</title>
     <style>
         body { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            height: 100vh; 
-            font-family: 'Arial', sans-serif; 
-            background-color: #fff0f5; 
-            overflow: hidden; 
-            margin: 0; 
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff0f5;
+            font-family: sans-serif;
+            overflow: hidden; /* This acts as a physical barrier */
         }
-        h1 { color: #d63384; font-size: 2.5rem; text-align: center; margin-bottom: 30px; }
-        
-        /* The "Assembly Area" */
-        .container { width: 100vw; height: 100vh; position: absolute; top: 0; left: 0; pointer-events: none; }
-        
+        h1 { color: #d63384; margin-bottom: 50px; z-index: 1; }
+        .btn-group { display: flex; gap: 50px; z-index: 1; }
         button { 
-            padding: 15px 40px; 
+            padding: 15px 30px; 
             font-size: 1.5rem; 
+            font-weight: bold; 
             border-radius: 50px; 
             border: none; 
-            cursor: pointer; 
-            font-weight: bold; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            pointer-events: auto; /* Keeps buttons clickable */
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        
-        #yesBtn { background-color: #ff4d6d; color: white; position: absolute; top: 50%; left: 40%; transform: translate(-50%, -50%); }
-        
+        #yesBtn { background-color: #ff4d6d; color: white; }
         #noBtn { 
             background-color: #6c757d; 
             color: white; 
-            position: absolute; 
-            top: 50%; 
-            left: 60%; 
-            transform: translate(-50%, -50%); 
-            transition: 0.3s ease-out; 
-            z-index: 100;
+            transition: 0.3s ease;
+            position: absolute; /* Allows independent travel */
         }
     </style>
 </head>
 <body>
     <h1>Will you be my Valentine? ❤️</h1>
-    
-    <button id="yesBtn" onclick="celebrate()">Yes!</button>
-    <button id="noBtn" onmouseover="dodge()">No</button>
+    <div class="btn-group">
+        <button id="yesBtn" onclick="celebrate()">Yes!</button>
+        <button id="noBtn" onmouseover="dodge()">No</button>
+    </div>
 
     <script>
         function dodge() {
             const btn = document.getElementById('noBtn');
             
-            // Set a strict clearance buffer (margin from screen edge)
-            const margin = 100; 
+            // Define the workspace limits (Subtracting button size + safety margin)
+            const maxX = window.innerWidth - 150; 
+            const maxY = window.innerHeight - 100;
 
-            // Calculate the valid X and Y range like a bounded box
-            const maxX = window.innerWidth - btn.offsetWidth - margin;
-            const maxY = window.innerHeight - btn.offsetHeight - margin;
+            // Simple coordinate generation (always positive)
+            const x = Math.floor(Math.random() * maxX);
+            const y = Math.floor(Math.random() * maxY);
 
-            // Generate coordinates and use Math.abs to prevent negative values
-            const randomX = Math.max(margin, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(margin, Math.floor(Math.random() * maxY));
-
-            // Apply the coordinates
-            btn.style.left = randomX + 'px';
-            btn.style.top = randomY + 'px';
-            
-            // Overrides the initial center alignment
-            btn.style.transform = 'none'; 
+            // Directly override the position
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
         }
 
         function celebrate() {
-            alert('I knew it! ❤️ Happy Valentine\'s Day!');
-            document.body.innerHTML = '<h1 style="font-size: 5rem; color: #ff4d6d; text-align: center; margin-top: 20%;">❤️ YAY! ❤️</h1>';
+            alert('Yay! I knew you would say YES! ❤️');
+            document.body.innerHTML = '<div style="text-align:center;"><h1>❤️ I LOVE YOU! ❤️</h1></div>';
         }
     </script>
 </body>
