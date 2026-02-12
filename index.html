@@ -1,80 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Will You Be Mine? ❤️</title>
-    <style>
-        body { 
-            margin: 0; padding: 0; width: 100vw; height: 100vh;
-            display: flex; flex-direction: column; align-items: center;
-            background-color: #fff0f5; font-family: sans-serif; overflow: hidden;
-        }
-        
-        /* ZONE 1: The Header (Top 30% of screen) */
-        header {
-            height: 30vh; width: 100%;
-            display: flex; align-items: center; justify-content: center;
-        }
-        h1 { color: #d63384; font-size: 3rem; text-align: center; margin: 0; }
-
-        /* ZONE 2: The Yes Button (Middle 40% of screen) */
-        main {
-            height: 40vh; width: 100%;
-            display: flex; align-items: center; justify-content: center;
-        }
-        #yesBtn { 
-            padding: 20px 50px; font-size: 2rem; background-color: #ff4d6d; 
-            color: white; border: none; border-radius: 50px; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-weight: bold;
-        }
-
-        /* ZONE 3: The No Button Playground (Bottom 30% of screen) */
-        #noBtn { 
-            position: absolute; padding: 15px 35px; font-size: 1.5rem;
-            background-color: #6c757d; color: white; border: none; 
-            border-radius: 50px; cursor: pointer; transition: 0.5s ease-out;
-            font-weight: bold; bottom: 10vh; /* Starts at the bottom */
-        }
-    </style>
+<title>Be My Valentine?</title>
+<style>
+body {
+    text-align: center;
+    font-family: Arial;
+    background: pink;
+    margin-top: 100px;
+}
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    margin: 10px;
+    cursor: pointer;
+}
+#noBtn {
+    position: absolute;
+}
+</style>
 </head>
 <body>
 
-    <header>
-        <h1>Will you be my Valentine? ❤️</h1>
-    </header>
+<h1>Will you be my Valentine? ❤️</h1>
 
-    <main>
-        <button id="yesBtn" onclick="celebrate()">Yes!</button>
-    </main>
+<button onclick="yesClicked()">Yes ❤️</button>
+<button id="noBtn" onmouseover="moveButton()">No 😢</button>
 
-    <button id="noBtn" onmouseover="dodge()">No</button>
+<script>
+function yesClicked() {
+    document.body.innerHTML = "<h1>Yesss! ❤️ You just made me the happiest man alive! 😍</h1>";
+}
 
-    <script>
-        function dodge() {
-            const btn = document.getElementById('noBtn');
-            
-            // Set boundaries for the bottom 30% of the screen ONLY
-            const padding = 50;
-            const minWidth = padding;
-            const maxWidth = window.innerWidth - btn.offsetWidth - padding;
-            
-            // Limit Y-axis to the bottom portion of the screen (from 70vh to 90vh)
-            const minHeight = window.innerHeight * 0.7;
-            const maxHeight = window.innerHeight - btn.offsetHeight - padding;
+function moveButton() {
+    var button = document.getElementById("noBtn");
+    button.style.top = Math.random() * window.innerHeight + "px";
+    button.style.left = Math.random() * window.innerWidth + "px";
+}
+</script>
 
-            const randomX = Math.floor(Math.random() * (maxWidth - minWidth + 1)) + minWidth;
-            const randomY = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
-
-            btn.style.left = randomX + 'px';
-            btn.style.top = randomY + 'px';
-        }
-
-        function celebrate() {
-            document.body.innerHTML = `
-                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; background-color:#ff4d6d; color:white;">
-                    <h1 style="font-size:5rem; color:white;">❤️ I LOVE YOU! ❤️</h1>
-                    <p style="font-size:2rem;">(You made the right choice!)</p>
-                </div>`;
-        }
-    </script>
 </body>
 </html>
