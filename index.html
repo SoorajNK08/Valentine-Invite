@@ -1,84 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Be My Valentine? ❤️</title>
-    <style>
-        body {
-            text-align: center;
-            font-family: 'Arial', sans-serif;
-            background: #fff0f5; /* Light romantic pink */
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding-top: 100px;
-            overflow: hidden; /* Prevents scrollbars */
-        }
-        h1 {
-            color: #d63384;
-            font-size: 3rem;
-            margin-bottom: 50px;
-            z-index: 100;
-            pointer-events: none; /* Keeps text from blocking mouse */
-        }
-        button {
-            padding: 15px 40px;
-            font-size: 20px;
-            margin: 15px;
-            cursor: pointer;
-            border-radius: 50px;
-            border: none;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            z-index: 1;
-        }
-        #yesBtn {
-            background-color: #ff4d6d;
-            color: white;
-        }
-        #noBtn {
-            background-color: #6c757d;
-            color: white;
-            position: absolute; 
-            transition: 0.5s ease-out; /* Smooth movement damping */
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Valentine</title>
+
+<style>
+body{
+    background:#ffc0cb;
+    font-family: Arial;
+    text-align:center;
+    padding-top:80px;
+}
+
+h1{
+    padding:20px;
+}
+
+button{
+    padding:15px 30px;
+    font-size:18px;
+    margin:10px;
+}
+
+#noBtn{
+    position:absolute;
+}
+
+#container{
+    position:relative;
+    height:300px;
+}
+</style>
 </head>
+
 <body>
 
-    <h1>Will you be my Valentine? ❤️</h1>
+<h1 id="question">Will you be my Valentine? ❤️</h1>
 
-    <div style="display: flex; justify-content: center; width: 100%;">
-        <button id="yesBtn" onclick="yesClicked()">Yes ❤️</button>
-        <button id="noBtn" onmouseover="moveButton()">No 😢</button>
-    </div>
+<div id="container">
+<button onclick="yesClicked()">Yes ❤️</button>
+<button id="noBtn" onmouseover="moveNo()">No 😢</button>
+</div>
 
-    <script>
-        function yesClicked() {
-            // Final success screen logic
-            document.body.innerHTML = `
-                <div style="margin-top:20vh; text-align:center; width:100%;">
-                    <h1 style="font-size:4rem;">Yesss! ❤️</h1>
-                    <h2 style="color:#d63384; font-family:sans-serif;">You just made me the happiest man alive! 😍</h2>
-                </div>`;
-        }
+<script>
 
-        function moveButton() {
-            var button = document.getElementById("noBtn");
-            
-            // Boundary constraints (Safety clearances)
-            var buffer = 100; // 100px buffer from screen edges
-            
-            // Logic to keep the button at least 250px away from the top (Protecting the Header)
-            var x = Math.random() * (window.innerWidth - button.offsetWidth - buffer);
-            var y = Math.max(250, Math.random() * (window.innerHeight - button.offsetHeight - buffer));
+let round = 0;
 
-            button.style.left = x + "px";
-            button.style.top = y + "px";
-        }
-    </script>
+const questions = [
+"Will you be my Valentine? ❤️",
+"Hey beautiful… quick question 🥺",
+"After all our memories together…",
+"After tolerating me every day 😅",
+"System Error: NO not supported ❌",
+"Plot twist: NO is on leave today 😏",
+"Okay serious now… will you be MY Valentine? 💍❤️"
+];
+
+function moveNo(){
+    const btn = document.getElementById("noBtn");
+
+    btn.style.left = Math.random()*300 + "px";
+    btn.style.top = Math.random()*200 + "px";
+
+    round++;
+    if(round < questions.length){
+        document.getElementById("question").innerText = questions[round];
+    }
+}
+
+function yesClicked(){
+    document.body.innerHTML = `
+    <h1>Yesss 😍</h1>
+    <h2>You just made me the luckiest husband alive ❤️</h2>
+    <p>I’d choose you in every lifetime.</p>
+    <p>Happy Valentine’s Day, my love 💕</p>
+    `;
+}
+
+</script>
 
 </body>
 </html>
