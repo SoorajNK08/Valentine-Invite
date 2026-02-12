@@ -1,43 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Be My Valentine?</title>
-<style>
-body {
-    text-align: center;
-    font-family: Arial;
-    background: pink;
-    margin-top: 100px;
-}
-button {
-    padding: 15px 30px;
-    font-size: 18px;
-    margin: 10px;
-    cursor: pointer;
-}
-#noBtn {
-    position: absolute;
-}
-</style>
+    <title>Be My Valentine? ❤️</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            background: #fff0f5; /* Light romantic pink */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 100px;
+            overflow: hidden; /* Prevents scrollbars */
+        }
+        h1 {
+            color: #d63384;
+            font-size: 3rem;
+            margin-bottom: 50px;
+            z-index: 100;
+            pointer-events: none; /* Keeps text from blocking mouse */
+        }
+        button {
+            padding: 15px 40px;
+            font-size: 20px;
+            margin: 15px;
+            cursor: pointer;
+            border-radius: 50px;
+            border: none;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+        }
+        #noBtn {
+            background-color: #6c757d;
+            color: white;
+            position: absolute; 
+            transition: 0.5s ease-out; /* Smooth movement damping */
+        }
+    </style>
 </head>
 <body>
 
-<h1>Will you be my Valentine? ❤️</h1>
+    <h1>Will you be my Valentine? ❤️</h1>
 
-<button onclick="yesClicked()">Yes ❤️</button>
-<button id="noBtn" onmouseover="moveButton()">No 😢</button>
+    <div style="display: flex; justify-content: center; width: 100%;">
+        <button id="yesBtn" onclick="yesClicked()">Yes ❤️</button>
+        <button id="noBtn" onmouseover="moveButton()">No 😢</button>
+    </div>
 
-<script>
-function yesClicked() {
-    document.body.innerHTML = "<h1>Yesss! ❤️ You just made me the happiest man alive! 😍</h1>";
-}
+    <script>
+        function yesClicked() {
+            // Final success screen logic
+            document.body.innerHTML = `
+                <div style="margin-top:20vh; text-align:center; width:100%;">
+                    <h1 style="font-size:4rem;">Yesss! ❤️</h1>
+                    <h2 style="color:#d63384; font-family:sans-serif;">You just made me the happiest man alive! 😍</h2>
+                </div>`;
+        }
 
-function moveButton() {
-    var button = document.getElementById("noBtn");
-    button.style.top = Math.random() * window.innerHeight + "px";
-    button.style.left = Math.random() * window.innerWidth + "px";
-}
-</script>
+        function moveButton() {
+            var button = document.getElementById("noBtn");
+            
+            // Boundary constraints (Safety clearances)
+            var buffer = 100; // 100px buffer from screen edges
+            
+            // Logic to keep the button at least 250px away from the top (Protecting the Header)
+            var x = Math.random() * (window.innerWidth - button.offsetWidth - buffer);
+            var y = Math.max(250, Math.random() * (window.innerHeight - button.offsetHeight - buffer));
+
+            button.style.left = x + "px";
+            button.style.top = y + "px";
+        }
+    </script>
 
 </body>
 </html>
