@@ -16,22 +16,20 @@
             overflow: hidden;
         }
         
-        /* THE HEADER: Locked at the top */
         h1 { 
             color: #d63384; 
             margin-top: 10vh; 
             font-size: 3rem;
             z-index: 100; 
             text-align: center;
-            pointer-events: none; 
         }
 
-        /* INITIAL BUTTON PLACEMENT */
         .btn-group { 
-            margin-top: 10vh;
+            margin-top: 15vh;
             display: flex; 
-            gap: 40px; 
-            z-index: 1;
+            gap: 50px; 
+            justify-content: center;
+            width: 100%;
         }
 
         button { 
@@ -44,13 +42,14 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        #yesBtn { background-color: #ff4d6d; color: white; }
+        #yesBtn { background-color: #ff4d6d; color: white; z-index: 10; }
         
         #noBtn { 
             background-color: #6c757d; 
             color: white; 
-            transition: 1s ease-out;
-            position: absolute; /* Allows for dodging logic */
+            transition: 0.3s ease-out;
+            position: absolute; 
+            z-index: 5;
         }
     </style>
 </head>
@@ -64,23 +63,34 @@
 
     <script>
         function dodge() {
-            const btn = document.getElementById('noBtn');
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const yesRect = yesBtn.getBoundingClientRect();
             
-            // MECHANICAL LIMITS
-            // We set the "Floor" at 40% of the screen height to protect the text
-            const topLimit = window.innerHeight * 0.4; 
-            const edgeBuffer = 50;
+            const padding = 100; // Minimum distance from Yes button and edges
+            let newX, newY;
+            let isOverlapping = true;
 
-            const maxX = window.innerWidth - btn.offsetWidth - edgeBuffer;
-            const maxY = window.innerHeight - btn.offsetHeight - edgeBuffer;
+            // Loop until we find a coordinate that doesn't overlap the Yes button
+            while (isOverlapping) {
+                newX = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth - padding));
+                newY = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight - padding));
 
-            // Generate coordinates
-            const x = Math.max(edgeBuffer, Math.floor(Math.random() * maxX));
-            // The button can ONLY move in the space between 40% height and the bottom
-            const y = Math.max(topLimit, Math.floor(Math.random() * maxY));
+                // Check vertical boundary (Keep away from Header)
+                if (newY < 250) continue;
 
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
+                // Check collision with Yes Button
+                const buffer = 150; // Keep out radius
+                const xDist = Math.abs(newX - yesRect.left);
+                const yDist = Math.abs(newY - yesRect.top);
+
+                if (xDist > buffer || yDist > buffer) {
+                    isOverlapping = false;
+                }
+            }
+
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
         }
 
         function celebrate() {
