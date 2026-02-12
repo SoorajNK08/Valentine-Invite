@@ -13,23 +13,25 @@
             align-items: center;
             background-color: #fff0f5;
             font-family: sans-serif;
-            overflow: hidden; /* Prevents scrollbars if button hits the edge */
+            overflow: hidden;
         }
         
-        /* The Header: Locked at the top layer */
+        /* THE HEADER: Locked at the top */
         h1 { 
             color: #d63384; 
-            margin-top: 80px; 
-            position: relative;
-            z-index: 100; /* Higher number = top layer */
+            margin-top: 10vh; 
+            font-size: 3rem;
+            z-index: 100; 
             text-align: center;
-            pointer-events: none; /* Mouse passes through text to buttons behind it */
+            pointer-events: none; 
         }
 
+        /* INITIAL BUTTON PLACEMENT */
         .btn-group { 
-            margin-top: 50px;
+            margin-top: 10vh;
             display: flex; 
             gap: 40px; 
+            z-index: 1;
         }
 
         button { 
@@ -39,17 +41,16 @@
             border-radius: 50px; 
             border: none; 
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        #yesBtn { background-color: #ff4d6d; color: white; position: relative; z-index: 1; }
+        #yesBtn { background-color: #ff4d6d; color: white; }
         
         #noBtn { 
             background-color: #6c757d; 
             color: white; 
             transition: 0.3s ease-out;
-            position: absolute; 
-            z-index: 1;
+            position: absolute; /* Allows for dodging logic */
         }
     </style>
 </head>
@@ -65,30 +66,28 @@
         function dodge() {
             const btn = document.getElementById('noBtn');
             
-            // BOUNDARY SETTINGS
-            const headerClearance = 200; // Pixels from top that are "OFF LIMITS"
-            const edgeBuffer = 50;       // Safety margin from the screen edges
+            // MECHANICAL LIMITS
+            // We set the "Floor" at 40% of the screen height to protect the text
+            const topLimit = window.innerHeight * 0.4; 
+            const edgeBuffer = 50;
 
-            // Calculate allowable workspace
             const maxX = window.innerWidth - btn.offsetWidth - edgeBuffer;
             const maxY = window.innerHeight - btn.offsetHeight - edgeBuffer;
 
             // Generate coordinates
             const x = Math.max(edgeBuffer, Math.floor(Math.random() * maxX));
-            // Force Y to always be below the header zone
-            const y = Math.max(headerClearance, Math.floor(Math.random() * maxY));
+            // The button can ONLY move in the space between 40% height and the bottom
+            const y = Math.max(topLimit, Math.floor(Math.random() * maxY));
 
-            // Apply new position
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
 
         function celebrate() {
-            // Clears the screen for the final romantic message
             document.body.innerHTML = `
-                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; background-color: #ff4d6d; color: white; text-align: center;">
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; background-color: #ff4d6d;">
                     <h1 style="font-size: 5rem; color: white;">❤️ I LOVE YOU! ❤️</h1>
-                    <p style="font-size: 2rem;">I knew you'd say Yes!</p>
+                    <p style="font-size: 2rem; color: white;">I knew you'd say Yes!</p>
                 </div>`;
         }
     </script>
