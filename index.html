@@ -4,100 +4,75 @@
     <title>Will You Be Mine? ❤️</title>
     <style>
         body { 
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #fff0f5;
-            font-family: sans-serif;
-            overflow: hidden;
+            margin: 0; padding: 0; width: 100vw; height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+            background-color: #fff0f5; font-family: sans-serif; overflow: hidden;
         }
         
-        h1 { 
-            color: #d63384; 
-            margin-top: 10vh; 
-            font-size: 3rem;
-            z-index: 100; 
-            text-align: center;
+        /* ZONE 1: The Header (Top 30% of screen) */
+        header {
+            height: 30vh; width: 100%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        h1 { color: #d63384; font-size: 3rem; text-align: center; margin: 0; }
+
+        /* ZONE 2: The Yes Button (Middle 40% of screen) */
+        main {
+            height: 40vh; width: 100%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        #yesBtn { 
+            padding: 20px 50px; font-size: 2rem; background-color: #ff4d6d; 
+            color: white; border: none; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-weight: bold;
         }
 
-        .btn-group { 
-            margin-top: 15vh;
-            display: flex; 
-            gap: 50px; 
-            justify-content: center;
-            width: 100%;
-        }
-
-        button { 
-            padding: 15px 35px; 
-            font-size: 1.5rem; 
-            font-weight: bold; 
-            border-radius: 50px; 
-            border: none; 
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        #yesBtn { background-color: #ff4d6d; color: white; z-index: 10; }
-        
+        /* ZONE 3: The No Button Playground (Bottom 30% of screen) */
         #noBtn { 
-            background-color: #6c757d; 
-            color: white; 
-            transition: 0.3s ease-out;
-            position: absolute; 
-            z-index: 5;
+            position: absolute; padding: 15px 35px; font-size: 1.5rem;
+            background-color: #6c757d; color: white; border: none; 
+            border-radius: 50px; cursor: pointer; transition: 0.5s ease-out;
+            font-weight: bold; bottom: 10vh; /* Starts at the bottom */
         }
     </style>
 </head>
 <body>
-    <h1>Will you be my Valentine? ❤️</h1>
-    
-    <div class="btn-group">
+
+    <header>
+        <h1>Will you be my Valentine? ❤️</h1>
+    </header>
+
+    <main>
         <button id="yesBtn" onclick="celebrate()">Yes!</button>
-        <button id="noBtn" onmouseover="dodge()">No</button>
-    </div>
+    </main>
+
+    <button id="noBtn" onmouseover="dodge()">No</button>
 
     <script>
         function dodge() {
-            const noBtn = document.getElementById('noBtn');
-            const yesBtn = document.getElementById('yesBtn');
-            const yesRect = yesBtn.getBoundingClientRect();
+            const btn = document.getElementById('noBtn');
             
-            const padding = 100; // Minimum distance from Yes button and edges
-            let newX, newY;
-            let isOverlapping = true;
+            // Set boundaries for the bottom 30% of the screen ONLY
+            const padding = 50;
+            const minWidth = padding;
+            const maxWidth = window.innerWidth - btn.offsetWidth - padding;
+            
+            // Limit Y-axis to the bottom portion of the screen (from 70vh to 90vh)
+            const minHeight = window.innerHeight * 0.7;
+            const maxHeight = window.innerHeight - btn.offsetHeight - padding;
 
-            // Loop until we find a coordinate that doesn't overlap the Yes button
-            while (isOverlapping) {
-                newX = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth - padding));
-                newY = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight - padding));
+            const randomX = Math.floor(Math.random() * (maxWidth - minWidth + 1)) + minWidth;
+            const randomY = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
 
-                // Check vertical boundary (Keep away from Header)
-                if (newY < 250) continue;
-
-                // Check collision with Yes Button
-                const buffer = 150; // Keep out radius
-                const xDist = Math.abs(newX - yesRect.left);
-                const yDist = Math.abs(newY - yesRect.top);
-
-                if (xDist > buffer || yDist > buffer) {
-                    isOverlapping = false;
-                }
-            }
-
-            noBtn.style.left = newX + 'px';
-            noBtn.style.top = newY + 'px';
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
         }
 
         function celebrate() {
             document.body.innerHTML = `
-                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; background-color: #ff4d6d;">
-                    <h1 style="font-size: 5rem; color: white;">❤️ I LOVE YOU! ❤️</h1>
-                    <p style="font-size: 2rem; color: white;">I knew you'd say Yes!</p>
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; background-color:#ff4d6d; color:white;">
+                    <h1 style="font-size:5rem; color:white;">❤️ I LOVE YOU! ❤️</h1>
+                    <p style="font-size:2rem;">(You made the right choice!)</p>
                 </div>`;
         }
     </script>
